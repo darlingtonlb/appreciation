@@ -1,0 +1,233 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>READ ME</title>
+<style>
+  :root {
+    --bg: #F4F1EA;
+    --ink: #1E1B16;
+    --accent: #C1521A;
+    --paper: #FFFDF8;
+  }
+
+  * { box-sizing: border-box; }
+
+  body {
+    margin: 0;
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: var(--bg);
+    font-family: Georgia, 'Times New Roman', serif;
+    color: var(--ink);
+    padding: 24px;
+  }
+
+  .card {
+    background: var(--paper);
+    border: 1px solid rgba(30,27,22,0.15);
+    border-radius: 10px;
+    padding: 48px 40px;
+    max-width: 520px;
+    width: 100%;
+    text-align: center;
+    box-shadow: 0 12px 30px rgba(30,27,22,0.08);
+  }
+
+  .buttons {
+    display: flex;
+    gap: 14px;
+    justify-content: center;
+    flex-wrap: wrap;
+  }
+
+  button {
+    font-family: inherit;
+    font-size: 1rem;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    background: var(--accent);
+    color: var(--paper);
+    border: none;
+    padding: 14px 32px;
+    border-radius: 6px;
+    cursor: pointer;
+    transition: transform 0.15s ease, background 0.15s ease;
+  }
+
+  button:hover {
+    background: #a3450f;
+  }
+
+  button.secondary {
+    background: transparent;
+    color: var(--accent);
+    border: 1.5px solid var(--accent);
+  }
+
+  button.secondary:hover {
+    background: rgba(193,82,26,0.08);
+  }
+
+  button:active {
+    transform: scale(0.97);
+  }
+
+  button:focus-visible {
+    outline: 3px solid var(--accent);
+    outline-offset: 3px;
+  }
+
+  /* Hidden by default so it takes up zero space and can't push
+     other content (like the images) down the page. */
+  #message {
+    display: none;
+    margin-top: 28px;
+    font-size: 1.05rem;
+    line-height: 1.6;
+    text-align: left;
+    max-width: 46ch;
+    margin-left: auto;
+    margin-right: auto;
+  }
+
+  #message.show {
+    display: block;
+  }
+
+  #results {
+    margin-top: 28px;
+    display: none;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 10px;
+  }
+
+  #results.show {
+    display: grid;
+  }
+
+  #results img {
+    width: 100%;
+    height: 100px;
+    object-fit: cover;
+    border-radius: 6px;
+    border: 1px solid rgba(30,27,22,0.12);
+    cursor: zoom-in;
+    transition: transform 0.15s ease, box-shadow 0.15s ease;
+  }
+
+  #results img:hover {
+    transform: scale(1.03);
+    box-shadow: 0 4px 12px rgba(30,27,22,0.15);
+  }
+
+  #lightbox {
+    display: none;
+    position: fixed;
+    inset: 0;
+    background: rgba(30,27,22,0.85);
+    align-items: center;
+    justify-content: center;
+    padding: 32px;
+    cursor: zoom-out;
+    z-index: 100;
+  }
+
+  #lightbox.show {
+    display: flex;
+  }
+
+  #lightbox img {
+    max-width: 100%;
+    max-height: 100%;
+    border-radius: 8px;
+    box-shadow: 0 20px 50px rgba(0,0,0,0.4);
+  }
+
+  #lightboxClose {
+    position: fixed;
+    top: 20px;
+    right: 28px;
+    color: var(--paper);
+    font-size: 2rem;
+    line-height: 1;
+    cursor: pointer;
+    font-family: Georgia, serif;
+  }
+
+  @media (max-width: 420px) {
+    #results {
+      grid-template-columns: repeat(2, 1fr);
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    button, #results img { transition: none; }
+  }
+</style>
+</head>
+<body>
+
+  <div class="card">
+    <div class="buttons">
+      <button id="revealBtn">READ ME</button>
+      <button id="resultsBtn" class="secondary">Results</button>
+    </div>
+    <p id="message"></p>
+    <div id="results">
+      <img src="results-1.png" alt="Result 1">
+    </div>
+  </div>
+
+  <div id="lightbox">
+    <span id="lightboxClose">&times;</span>
+    <img id="lightboxImg" src="" alt="Enlarged result">
+  </div>
+
+  <script>
+    const btn = document.getElementById('revealBtn');
+    const message = document.getElementById('message');
+    const resultsBtn = document.getElementById('resultsBtn');
+    const results = document.getElementById('results');
+
+    btn.addEventListener('click', () => {
+      message.textContent = "Dear Mr. and Mrs. Peterson, I would like to take this opportunity to express my heartfelt gratitude for everything you have done for me throughout my university journey. Words cannot fully describe how thankful I am for your kindness, sacrifices, and the support you have given me. From the very beginning, you believed in me and made it possible for me to pursue my dreams. You took the responsibility of supporting my education by paying my fees and providing me with the important things I needed along the way. Your generosity uplifted me and that allowed me to focus on my studies and personal growth. Your support was not only financial; it was also a source of motivation and encouragement. Knowing that someone cared enough to invest in my future gave me strength during challenging moments. Every opportunity I have had and every achievement I have made is connected to the kindness you showed me. I am deeply grateful for the sacrifices you made, the trust you placed in me, and the way you stood by me throughout this journey. I promise to value this opportunity, work hard, and use the knowledge I have gained to build a better future and make you proud. Thank you for being such an important part of my life and for giving me a chance to achieve something meaningful. I will always remember your generosity and carry your kindness with me wherever I go. With deepest appreciation and gratitude, Clinton Darlington Yartey";
+      message.classList.add('show');
+      results.classList.remove('show');
+    });
+
+    resultsBtn.addEventListener('click', () => {
+      results.classList.add('show');
+      message.classList.remove('show');
+    });
+
+    // Lightbox: click any result image to view it enlarged
+    const lightbox = document.getElementById('lightbox');
+    const lightboxImg = document.getElementById('lightboxImg');
+    const lightboxClose = document.getElementById('lightboxClose');
+
+    results.addEventListener('click', (e) => {
+      if (e.target.tagName === 'IMG') {
+        lightboxImg.src = e.target.src;
+        lightboxImg.alt = e.target.alt;
+        lightbox.classList.add('show');
+      }
+    });
+
+    function closeLightbox() {
+      lightbox.classList.remove('show');
+      lightboxImg.src = '';
+    }
+
+    lightbox.addEventListener('click', closeLightbox);
+    lightboxClose.addEventListener('click', closeLightbox);
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape') closeLightbox();
+    });
+  </script>
+
+</body>
+</html>
